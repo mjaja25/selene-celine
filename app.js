@@ -42,8 +42,8 @@ function productCard(p) {
           '</a>'
         ).join('') +
       '</div>' +
-      '<div class="tile-dots" aria-hidden="true">' +
-        gallery.map((_, i) => '<span class="dot ' + (i === 0 ? 'on' : '') + '"></span>').join('') +
+      '<div class="tile-bars tile-dots" aria-hidden="true">' +
+        gallery.map((_, i) => '<span class="bar dot ' + (i === 0 ? 'on' : '') + '"></span>').join('') +
       '</div>' +
       '<button type="button" class="tile-arrow prev" aria-label="Previous image">‹</button>' +
       '<button type="button" class="tile-arrow next" aria-label="Next image">›</button>' +
@@ -555,21 +555,21 @@ function closeMenu() {
     if (!track || !track.classList) return;
 
     if (track.classList.contains('tile-track')) {
-      const dots = track.parentElement && track.parentElement.querySelectorAll('.tile-dots .dot');
-      if (!dots || !dots.length) return;
+      const bars = track.parentElement && track.parentElement.querySelectorAll('.tile-bars .bar, .tile-dots .dot');
+      if (!bars || !bars.length) return;
       const width = track.clientWidth || 1;
-      const index = Math.min(dots.length - 1, Math.max(0, Math.round(track.scrollLeft / width)));
-      dots.forEach((d, i) => d.classList.toggle('on', i === index));
+      const index = Math.min(bars.length - 1, Math.max(0, Math.round(track.scrollLeft / width)));
+      bars.forEach((d, i) => d.classList.toggle('on', i === index));
     } else if (track.classList.contains('pdp-gallery')) {
       const counter = $('#pdpCounter');
-      const dots = $$('#pdpDots .dot');
+      const bars = $$('#pdpBars .bar, #pdpDots .bar, #pdpDots .dot');
       const figures = track.querySelectorAll('figure');
       const total = figures.length;
       if (!total) return;
       const width = track.clientWidth || 1;
       const index = Math.min(total - 1, Math.max(0, Math.round(track.scrollLeft / width)));
       if (counter) counter.textContent = (index + 1) + ' / ' + total;
-      if (dots.length) dots.forEach((d, i) => d.classList.toggle('on', i === index));
+      if (bars.length) bars.forEach((d, i) => d.classList.toggle('on', i === index));
     }
   }, { capture: true, passive: true });
 })();

@@ -25,8 +25,8 @@ PAGES.product = () => {
         </div>
         ${p.gallery.length > 1 ? `
           <div class="pdp-counter" id="pdpCounter">1 / ${p.gallery.length}</div>
-          <div class="pdp-dots" id="pdpDots">
-            ${p.gallery.map((_, i) => `<span class="dot ${i === 0 ? 'on' : ''}"></span>`).join('')}
+          <div class="pdp-bars pdp-dots" id="pdpDots">
+            ${p.gallery.map((_, i) => `<span class="bar dot ${i === 0 ? 'on' : ''}"></span>`).join('')}
           </div>
         ` : ''}
       </div>
