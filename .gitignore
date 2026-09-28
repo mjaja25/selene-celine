@@ -1,0 +1,15 @@
+﻿# Executables and large binaries
+cloudflared.exe
+*.exe
+
+# Scrapers and local raw media
+selene_insta/
+_shots/
+
+# Logs and temp files
+*.log
+selene-tunnel*.txt
+
+# OS metadata
+.DS_Store
+Thumbs.db
