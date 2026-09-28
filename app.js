@@ -29,8 +29,33 @@ function swatchHTML(p, max) {
 
 function productCard(p) {
   const wished = Store.isWished(p.id);
+  const gallery = (p.gallery && p.gallery.length) ? p.gallery : [p.img];
+  const hasMultiple = gallery.length > 1;
+
+  let mediaHTML = '';
+  if (hasMultiple) {
+    mediaHTML = '<div class="tile-img tile-carousel" data-id="' + p.id + '">' +
+      '<div class="tile-track">' +
+        gallery.map((g, i) =>
+          '<a class="tile-slide" href="product.html?id=' + p.id + '" tabindex="' + (i === 0 ? '0' : '-1') + '" aria-label="' + p.name + ' view ' + (i + 1) + '">' +
+            '<img src="' + g + '" alt="' + p.name + ' — view ' + (i + 1) + '" ' + (i ? 'loading="lazy"' : '') + '>' +
+          '</a>'
+        ).join('') +
+      '</div>' +
+      '<div class="tile-dots" aria-hidden="true">' +
+        gallery.map((_, i) => '<span class="dot ' + (i === 0 ? 'on' : '') + '"></span>').join('') +
+      '</div>' +
+      '<button type="button" class="tile-arrow prev" aria-label="Previous image">‹</button>' +
+      '<button type="button" class="tile-arrow next" aria-label="Next image">›</button>' +
+    '</div>';
+  } else {
+    mediaHTML = '<a class="tile-img" href="product.html?id=' + p.id + '">' +
+      '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy">' +
+    '</a>';
+  }
+
   return '<article class="tile" data-cat="' + p.cat + '" data-id="' + p.id + '">' +
-    '<a class="tile-img" href="product.html?id=' + p.id + '"><img src="' + p.img + '" alt="' + p.name + '" loading="lazy"></a>' +
+    mediaHTML +
     '<button class="tile-wish ' + (wished ? 'is-on' : '') + '" data-wish="' + p.id + '" aria-label="Save to wishlist">' + (wished ? '♥' : '♡') + '</button>' +
     (p.stock > 0 ? '<button class="tile-add" data-add="' + p.id + '">Add to bag</button>' : '<span class="tile-add is-out">Sold out</span>') +
     '<div class="tile-meta">' +
@@ -456,5 +481,73 @@ function closeMenu() {
   if (m) m.classList.remove('open');
   if (!anyPanelOpen()) document.body.classList.remove('is-lock');
 }
+
+/* ================= CAROUSEL INTERACTIONS ================= */
+(() => {
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let isSwiping = false;
+
+  document.addEventListener('touchstart', e => {
+    const track = e.target.closest('.tile-track, .pdp-gallery, .carousel-mobile');
+    if (!track) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    isSwiping = false;
+  }, { capture: true, passive: true });
+
+  document.addEventListener('touchmove', e => {
+    if (!isSwiping && e.touches.length === 1) {
+      const dx = Math.abs(e.touches[0].clientX - touchStartX);
+      const dy = Math.abs(e.touches[0].clientY - touchStartY);
+      if (dx > 8 && dx > dy) {
+        isSwiping = true;
+      }
+    }
+  }, { capture: true, passive: true });
+
+  document.addEventListener('click', e => {
+    if (isSwiping && e.target.closest('.tile-track, .pdp-gallery, .carousel-mobile')) {
+      e.preventDefault();
+      e.stopPropagation();
+      isSwiping = false;
+      return;
+    }
+
+    const arrow = e.target.closest('.tile-arrow');
+    if (arrow) {
+      e.preventDefault();
+      e.stopPropagation();
+      const carousel = arrow.closest('.tile-carousel');
+      const track = carousel && carousel.querySelector('.tile-track');
+      if (!track) return;
+      const dir = arrow.classList.contains('next') ? 1 : -1;
+      track.scrollBy({ left: dir * track.clientWidth, behavior: 'smooth' });
+    }
+  }, { capture: true });
+
+  document.addEventListener('scroll', e => {
+    const track = e.target;
+    if (!track || !track.classList) return;
+
+    if (track.classList.contains('tile-track')) {
+      const dots = track.parentElement && track.parentElement.querySelectorAll('.tile-dots .dot');
+      if (!dots || !dots.length) return;
+      const width = track.clientWidth || 1;
+      const index = Math.min(dots.length - 1, Math.max(0, Math.round(track.scrollLeft / width)));
+      dots.forEach((d, i) => d.classList.toggle('on', i === index));
+    } else if (track.classList.contains('pdp-gallery')) {
+      const counter = $('#pdpCounter');
+      const dots = $$('#pdpDots .dot');
+      const figures = track.querySelectorAll('figure');
+      const total = figures.length;
+      if (!total) return;
+      const width = track.clientWidth || 1;
+      const index = Math.min(total - 1, Math.max(0, Math.round(track.scrollLeft / width)));
+      if (counter) counter.textContent = (index + 1) + ' / ' + total;
+      if (dots.length) dots.forEach((d, i) => d.classList.toggle('on', i === index));
+    }
+  }, { capture: true, passive: true });
+})();
 
 const PAGES = {};

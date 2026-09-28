@@ -19,8 +19,16 @@ PAGES.product = () => {
 
   root.innerHTML = `
     <section class="pdp">
-      <div class="pdp-gallery">
-        ${p.gallery.map((g, i) => `<figure><img src="${g}" alt="${p.name} — view ${i + 1}" ${i ? 'loading="lazy"' : ''}></figure>`).join('')}
+      <div class="pdp-gallery-wrap">
+        <div class="pdp-gallery" id="pdpGallery">
+          ${p.gallery.map((g, i) => `<figure data-idx="${i}"><img src="${g}" alt="${p.name} — view ${i + 1}" ${i ? 'loading="lazy"' : ''}></figure>`).join('')}
+        </div>
+        ${p.gallery.length > 1 ? `
+          <div class="pdp-counter" id="pdpCounter">1 / ${p.gallery.length}</div>
+          <div class="pdp-dots" id="pdpDots">
+            ${p.gallery.map((_, i) => `<span class="dot ${i === 0 ? 'on' : ''}"></span>`).join('')}
+          </div>
+        ` : ''}
       </div>
 
       <div class="pdp-meta">
@@ -97,6 +105,17 @@ PAGES.product = () => {
   if (guide) guide.addEventListener('click', e => {
     e.preventDefault();
     showToast('Indian sizing: measure the inner diameter in mm — 16mm ≈ size 8');
+  });
+
+  const pdpGallery = $('#pdpGallery');
+  $$('.thumbs figure').forEach((thumb, idx) => {
+    thumb.style.cursor = 'pointer';
+    thumb.addEventListener('click', () => {
+      if (pdpGallery) {
+        const figures = pdpGallery.querySelectorAll('figure');
+        if (figures[idx]) figures[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+      }
+    });
   });
 
   function renderReviews() {
