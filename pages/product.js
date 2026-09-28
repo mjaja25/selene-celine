@@ -38,36 +38,37 @@ PAGES.product = () => {
         <p class="pdp-price">${money(p.price)}</p>
         ${p.mrp > p.price ? `<p class="pdp-was"><s>${money(p.mrp)}</s></p>` : ''}
 
-        <div class="pdp-color">Color — <b id="pdpColorName">${colors[0].n}</b></div>
+        <div class="pdp-color">COLOR — <b id="pdpColorName">${colors[0].n}</b></div>
         <div class="pdp-sw" id="pdpSw">${colors.map((c, i) =>
           `<button type="button" class="${i === 0 ? 'on' : ''}" data-col="${i}" style="background:${c.h}" title="${c.n}" aria-label="${c.n}"></button>`).join('')}</div>
 
         ${p.sizes.length > 1 ? `
         <div class="pdp-size">
-          <div class="o-lab-row"><span>${p.cat === 'rings' ? 'Size' : 'Length'}</span>${p.cat === 'rings' ? '<a class="link-btn" href="#" id="sizeGuide">Size guide</a>' : ''}</div>
+          <div class="o-lab-row"><span>${p.cat === 'rings' ? 'SIZE' : 'LENGTH'}</span>${p.cat === 'rings' ? '<a class="link-btn" href="#" id="sizeGuide">SIZE GUIDE</a>' : ''}</div>
           <div class="opt-vals" id="sizeVals">${p.sizes.map(s => `<button type="button" data-size="${s}">${s}</button>`).join('')}</div>
-          <p class="opt-hint" id="sizeHint" hidden>Please choose a ${p.cat === 'rings' ? 'size' : 'length'}.</p>
+          <p class="opt-hint" id="sizeHint" hidden>Please select a ${p.cat === 'rings' ? 'size' : 'length'}.</p>
         </div>` : ''}
 
         <div class="o-buy">
           <div class="qty big"><button data-step="-1" aria-label="Decrease">−</button><span id="pdpQty">1</span><button data-step="1" aria-label="Increase">+</button></div>
-          <span class="hint">${p.stock > 0 ? 'Ships in 24h' : 'Unavailable'}</span>
+          <span class="hint">${p.stock > 0 ? 'COMPLIMENTARY DELIVERY' : 'UNAVAILABLE'}</span>
         </div>
-        <p class="avail">${p.stock > 0 ? (p.stock <= 4 ? `Only ${p.stock} left in stock` : 'In stock online') : 'Sold out'}</p>
+        <p class="avail">${p.stock > 0 ? (p.stock <= 4 ? `ONLY ${p.stock} LEFT IN STOCK` : 'IN STOCK ONLINE · COMPLIMENTARY EXPRESS SHIPPING') : 'CURRENTLY UNAVAILABLE ONLINE'}</p>
 
         <div class="thumbs">${p.gallery.slice(0, 3).map(g => `<figure><img src="${g}" alt="" loading="lazy"></figure>`).join('')}</div>
 
-        <button class="btn o-cta full" id="pdpAdd">${p.stock > 0 ? 'Add to bag — ' + money(p.price) : 'Sold out'}</button>
+        <button class="btn o-cta full" id="pdpAdd">${p.stock > 0 ? 'ADD TO SHOPPING BAG — ' + money(p.price) : 'CURRENTLY UNAVAILABLE'}</button>
 
         <div class="acc">
-          <details open><summary>Product details <i>+</i></summary><div class="acc-body">${p.details.map(d => `<p>${d}</p>`).join('')}</div></details>
-          <details><summary>Care <i>+</i></summary><div class="acc-body"><p>${p.care}</p></div></details>
-          <details><summary>Shipping &amp; returns <i>+</i></summary><div class="acc-body"><p>Free shipping on your first order and on orders over ${money(FREE_SHIP_THRESHOLD)}. Standard delivery 2–5 business days across India. Unworn pieces can be returned within 7 days.</p></div></details>
+          <details open><summary>DETAILS <i>+</i></summary><div class="acc-body">${p.details.map(d => `<p>${d}</p>`).join('')}</div></details>
+          <details><summary>COMPOSITION &amp; CARE <i>+</i></summary><div class="acc-body"><p>${p.care}</p></div></details>
+          <details><summary>SHIPPING &amp; COMPLIMENTARY RETURNS <i>+</i></summary><div class="acc-body"><p>Complimentary express shipping on all orders over ${money(FREE_SHIP_THRESHOLD)}. Delivery takes 2–4 business days across India. Unworn pieces in original packaging may be returned within 14 days of delivery.</p></div></details>
+          <details><summary>CHECK AVAILABILITY IN STORE <i>+</i></summary><div class="acc-body"><p>Available to discover at our flagship boutiques. Contact client service to arrange a private appointment or reserve in boutique.</p></div></details>
         </div>
 
         <div class="links">
-          <a href="#">Delivery &amp; returns <span class="g">›</span></a>
-          <a href="#">Contact us <span class="g">›</span></a>
+          <a href="#">CONTACT CLIENT SERVICE <span class="g">›</span></a>
+          <a href="#">SHIPPING &amp; COMPLIMENTARY RETURNS <span class="g">›</span></a>
         </div>
       </div>
     </section>`;
@@ -94,10 +95,10 @@ PAGES.product = () => {
   });
 
   $('#pdpAdd').addEventListener('click', () => {
-    if (p.stock <= 0) { showToast('Sold out'); return; }
+    if (p.stock <= 0) { showToast('Currently unavailable online'); return; }
     if (!size) { $('#sizeHint').hidden = false; $('#sizeVals').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
     Store.add(p.id, size, qty);
-    showToast(p.name + ' added to bag');
+    showToast(p.name + ' added to shopping bag');
     openDrawer(true);
   });
 

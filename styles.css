@@ -95,22 +95,30 @@ body.nav-over-video .g-hover{
 .g-bag:hover{opacity:.55}
 
 /* ================= MOBILE HEADER ================= */
+/* ================= MOBILE HEADER (CELINE LAYOUT) ================= */
 .g-mhead{
   display:none;position:fixed;top:0;left:0;right:0;height:var(--headH);
   background:#fff;z-index:14;align-items:center;justify-content:space-between;
-  padding:0 20px;
+  padding:0 18px;border-bottom:1px solid var(--hair2);
 }
+.g-mhead .m-left{display:flex;align-items:center;width:75px}
 .m-logo{
+  position:absolute;left:50%;transform:translateX(-50%);
   font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-size:31px;line-height:24px;font-weight:400;letter-spacing:0;text-transform:uppercase;
+  font-size:25px;line-height:20px;font-weight:400;letter-spacing:1px;text-transform:uppercase;
+  color:#000;text-align:center;
 }
-.g-mhead .m-tools{display:flex;align-items:center;gap:6px}
-.g-mhead button{display:flex;align-items:center;justify-content:center;width:32px;height:32px}
-.g-mhead svg{width:21px;height:21px}
-.g-ham{position:relative}
-.g-ham span{position:absolute;left:5px;width:22px;height:1px;background:#000;transition:transform .3s var(--tr),opacity .2s}
-.g-ham span:nth-child(1){top:12px}
-.g-ham span:nth-child(2){top:19px}
+.g-mhead .m-tools{display:flex;align-items:center;justify-content:flex-end;gap:12px;min-width:75px}
+.g-mhead .m-bag-link{
+  font-size:10px;line-height:13px;letter-spacing:.4px;text-transform:uppercase;font-weight:500;
+  display:flex;align-items:center;cursor:pointer;
+}
+.g-mhead button{display:flex;align-items:center;justify-content:center;height:32px}
+.g-mhead svg{width:18px;height:18px}
+.g-ham{position:relative;width:24px;height:24px;padding:0}
+.g-ham span{position:absolute;left:0;width:20px;height:1px;background:#000;transition:transform .3s var(--tr),opacity .2s}
+.g-ham span:nth-child(1){top:8px}
+.g-ham span:nth-child(2){top:15px}
 
 /* ================= MOBILE MENU ================= */
 .g-mmenu{

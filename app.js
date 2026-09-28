@@ -57,7 +57,7 @@ function productCard(p) {
   return '<article class="tile" data-cat="' + p.cat + '" data-id="' + p.id + '">' +
     mediaHTML +
     '<button class="tile-wish ' + (wished ? 'is-on' : '') + '" data-wish="' + p.id + '" aria-label="Save to wishlist">' + (wished ? '♥' : '♡') + '</button>' +
-    (p.stock > 0 ? '<button class="tile-add" data-add="' + p.id + '">Add to bag</button>' : '<span class="tile-add is-out">Sold out</span>') +
+    (p.stock > 0 ? '<button class="tile-add" data-add="' + p.id + '">ADD TO SHOPPING BAG</button>' : '<span class="tile-add is-out">CURRENTLY UNAVAILABLE</span>') +
     '<div class="tile-meta">' +
       '<a class="tile-title" href="product.html?id=' + p.id + '">' + p.name + '</a>' +
       '<div class="tile-price"><b>' + money(p.price) + '</b><span class="tile-sw">' + swatchHTML(p, 2) + '</span></div>' +
@@ -72,7 +72,7 @@ function observeReveals(root) {
 
 /* ================= NAV ================= */
 const LINE_OF = { 'andrea-tbar': 'andrea', 'moon-venus': 'moon', 'seraphina-band': 'seraphina', 'lumina-trio': 'lumina', 'aura-bangle': 'aura' };
-const SUGS = ['Rings', 'Necklaces', 'Earrings', 'Bracelets', 'Gifting'];
+const SUGS = ['RINGS', 'NECKLACES', 'EARRINGS', 'BRACELETS', 'THE ANDREA', 'MOON & VENUS'];
 
 function activeKeys() {
   const keys = new Set();
@@ -92,34 +92,35 @@ function activeKeys() {
 const NAV_LV2 = [
   ['cat-all', 'View all', 'shop.html'],
   ['', 'New', 'shop.html?sort=new'],
-  ['cat-rings', 'Rings', 'shop.html?cat=rings'],
-  ['cat-necklaces', 'Necklaces', 'shop.html?cat=necklaces'],
-  ['cat-earrings', 'Earrings', 'shop.html?cat=earrings'],
-  ['cat-bracelets', 'Bracelets', 'shop.html?cat=bracelets']
+  ['cat-all', 'VIEW ALL', 'shop.html'],
+  ['', 'NEW IN JEWELLERY', 'shop.html?sort=new'],
+  ['cat-earrings', 'EARRINGS', 'shop.html?cat=earrings'],
+  ['cat-necklaces', 'NECKLACES & PENDANTS', 'shop.html?cat=necklaces'],
+  ['cat-bracelets', 'BRACELETS', 'shop.html?cat=bracelets'],
+  ['cat-rings', 'RINGS', 'shop.html?cat=rings']
 ];
 const NAV_LINES = [
-  ['line-andrea', 'The Andrea', 'shop.html?q=andrea'],
-  ['line-moon', 'Moon & Venus', 'shop.html?q=moon'],
-  ['line-seraphina', 'Seraphina', 'shop.html?q=seraphina'],
-  ['line-lumina', 'Lumina', 'shop.html?q=lumina'],
-  ['line-aura', 'Aura', 'shop.html?q=aura'],
-  ['', 'The Edit', 'shop.html'],
-  ['', 'Gifting', 'shop.html?cat=all']
+  ['line-andrea', 'THE ANDREA', 'shop.html?q=andrea'],
+  ['line-moon', 'MOON & VENUS', 'shop.html?q=moon'],
+  ['line-seraphina', 'SERAPHINA', 'shop.html?q=seraphina'],
+  ['line-lumina', 'LUMINA', 'shop.html?q=lumina'],
+  ['line-aura', 'AURA', 'shop.html?q=aura']
 ];
 
 function railHTML() {
   const a = (k, cls, txt, href) => '<a' + (k ? ' data-k="' + k + '"' : '') + (cls ? ' class="' + cls + '"' : '') + ' href="' + href + '">' + txt + '</a>';
   let h = '<nav class="g-nav" id="gnav"><ul>';
-  h += '<li>' + a('', '', 'New', 'shop.html?sort=new') + '</li>';
-  h += '<li class="grp">' + a('women', '', 'Women', 'shop.html');
-  h += a('jewelry', 'lv1', 'Jewelry', 'shop.html');
+  h += '<li>' + a('', '', 'NEW ARRIVALS', 'shop.html?sort=new') + '</li>';
+  h += '<li class="grp">' + a('women', '', 'WOMEN', 'shop.html');
+  h += a('jewelry', 'lv1', 'JEWELLERY', 'shop.html');
   NAV_LV2.forEach(x => { h += a(x[0], 'lv2', x[1], x[2]); });
-  NAV_LINES.forEach(x => { h += a(x[0], 'lv1', x[1], x[2]); });
+  h += '<span class="lv1" style="display:block;margin-top:8px;font-size:9px;color:var(--mut);letter-spacing:.5px">COLLECTIONS</span>';
+  NAV_LINES.forEach(x => { h += a(x[0], 'lv2', x[1], x[2]); });
   h += '</li>';
-  h += '<li class="grp">' + a('', '', 'Gifts', 'shop.html?cat=all') + a('', '', 'Gift cards', 'shop.html?cat=all') + '</li>';
-  h += '<li class="grp">' + a('', '', 'The house', 'index.html#story') + a('', '', 'Selene now', 'index.html') + '</li>';
-  h += '<li class="grp">' + a('', '', 'Store locator', 'index.html#story') + a('', '', 'Sign in / register', '#') + '</li>';
-  h += '<li class="grp search-row"><button type="button" id="searchOpen">Search <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg></button></li>';
+  h += '<li class="grp">' + a('', '', 'MEN', 'shop.html') + a('', '', 'HAUTE PARFUMERIE', 'shop.html') + a('', '', 'MAISON SELENE', 'shop.html') + '</li>';
+  h += '<li class="grp">' + a('', '', 'CAMPAIGNS', 'index.html#lookbook') + a('', '', 'THE MAISON', 'index.html#story') + '</li>';
+  h += '<li class="grp">' + a('', '', 'STORE LOCATOR', 'index.html#story') + a('', '', 'SIGN IN / REGISTER', '#') + '</li>';
+  h += '<li class="grp search-row"><button type="button" id="searchOpen">SEARCH <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg></button></li>';
   h += '</ul></nav>';
   return h;
 }
@@ -127,59 +128,78 @@ function railHTML() {
 function mmHTML() {
   const a = (k, txt, href) => '<a' + (k ? ' data-k="' + k + '"' : '') + ' href="' + href + '">' + txt + '</a>';
   const item = (label, sub) => '<div class="mm-item"><button type="button" class="mm-row" data-mm>' + label + '<i>+</i></button><div class="mm-sub">' + sub + '</div></div>';
-  let list = '<div class="mm-item"><a class="mm-row" href="shop.html?sort=new">New</a></div>';
-  let sub = a('women', 'Women', 'shop.html') + a('jewelry', 'Jewelry', 'shop.html');
-  NAV_LV2.forEach(x => { sub += a(x[0], 'lv2', x[1], x[2]); });
-  NAV_LINES.forEach(x => { sub += a(x[0], 'lv2', x[1], x[2]); });
-  list += item('Women', sub);
-  list += '<div class="mm-item"><a class="mm-row" href="shop.html?cat=all">Gifts</a></div>';
-  list += '<div class="mm-item"><a class="mm-row" href="index.html#story">The house</a></div>';
-  list += '<div class="mm-item"><a class="mm-row" href="index.html">Selene now</a></div>';
-  list += '<div class="mm-item"><button type="button" class="mm-row" id="mmSearch">Search<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg></button></div>';
+  let list = '<div class="mm-item"><a class="mm-row" href="shop.html?sort=new">NEW ARRIVALS</a></div>';
+  let sub = a('jewelry', 'VIEW ALL JEWELLERY', 'shop.html') +
+    NAV_LV2.slice(1).map(x => a(x[0], x[1], x[2])).join('') +
+    '<div class="mm-div" style="margin:8px 0;border-top:1px solid var(--hair2)"></div>' +
+    '<span style="display:block;padding:4px 0;font-size:9px;color:var(--mut);letter-spacing:.5px">COLLECTIONS</span>' +
+    NAV_LINES.map(x => a(x[0], x[1], x[2])).join('');
+  list += item('WOMEN', sub);
+  list += '<div class="mm-item"><a class="mm-row" href="shop.html">MEN</a></div>';
+  list += '<div class="mm-item"><a class="mm-row" href="shop.html">HAUTE PARFUMERIE</a></div>';
+  list += '<div class="mm-item"><a class="mm-row" href="shop.html">MAISON SELENE</a></div>';
+  list += '<div class="mm-item"><a class="mm-row" href="index.html#lookbook">CAMPAIGNS</a></div>';
+  list += '<div class="mm-item"><button type="button" class="mm-row" id="mmSearch">SEARCH<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg></button></div>';
   return '<nav class="g-mmenu" id="mmenu" aria-label="Menu">' +
-    '<div class="mm-head"><a class="m-logo" href="index.html">Selene</a><button class="mm-x" id="mmClose" aria-label="Close menu"></button></div>' +
+    '<div class="mm-head"><button class="mm-x" id="mmClose" aria-label="Close menu"></button><a class="m-logo" href="index.html">SELENE</a><div style="width:24px"></div></div>' +
     '<div class="mm-list">' + list + '</div>' +
     '<div class="mm-bottom">' +
-      '<a href="index.html#story">Store locator</a>' +
-      '<a href="#">Sign in / register</a>' +
-      '<button type="button" id="mmBag">Bag (<span id="mmBagN">0</span>)</button>' +
-      '<a href="#">Contact us</a>' +
-      '<div class="mm-region">India | EN</div>' +
+      '<div style="font-size:9px;color:var(--mut);letter-spacing:1px;margin-bottom:8px">CLIENT SERVICE</div>' +
+      '<a href="#">CONTACT CLIENT SERVICE</a>' +
+      '<a href="#">SHIPPING &amp; COMPLIMENTARY RETURNS</a>' +
+      '<a href="index.html#story">STORE LOCATOR</a>' +
+      '<a href="#">SIGN IN / REGISTER</a>' +
+      '<button type="button" id="mmBag">SHOPPING BAG (<span id="mmBagN">0</span>)</button>' +
+      '<div class="mm-region">INDIA | EN</div>' +
     '</div></nav>';
 }
 
 function footerHTML() {
   return '<footer class="g-footer wrap">' +
-    '<div class="fr"><a href="#">Contact us</a><a href="#">Shipping &amp; returns</a><a href="#">Care guide</a><a href="#">Size guide</a><a href="#">FAQ</a>' +
-      '<span class="fr-r"><a href="https://www.instagram.com/selene._co" target="_blank" rel="noopener">Instagram</a><button type="button" id="newsOpen">Newsletter</button></span></div>' +
-    '<div class="fr"><a href="index.html#story">The house</a><a href="index.html">Selene now</a><a href="orders.html">Order status</a><a href="wishlist.html">Wishlist</a>' +
-      '<span class="fr-r"><button type="button" id="ckOpen">Cookie settings</button></span></div>' +
-    '<div class="fr f-legal"><span>© 2026 Selene</span><span class="fr-r">India | EN</span></div>' +
+    '<div class="fr">' +
+      '<span class="fr-col-title" style="font-weight:700;margin-bottom:4px">CLIENT SERVICE</span>' +
+      '<a href="#">CONTACT US</a><a href="#">SHIPPING &amp; COMPLIMENTARY RETURNS</a><a href="#">CARE GUIDE</a><a href="#">SIZE GUIDE</a><a href="#">FAQ</a><a href="index.html#story">STORE LOCATOR</a>' +
+      '<span class="fr-r"><a href="https://www.instagram.com/selene._co" target="_blank" rel="noopener">INSTAGRAM</a><button type="button" id="newsOpen">NEWSLETTER</button></span>' +
+    '</div>' +
+    '<div class="fr">' +
+      '<span class="fr-col-title" style="font-weight:700;margin-bottom:4px">THE MAISON</span>' +
+      '<a href="index.html#story">THE MAISON</a><a href="index.html">CAMPAIGNS</a><a href="orders.html">ORDER STATUS</a><a href="wishlist.html">WISHLIST</a>' +
+      '<span class="fr-r"><button type="button" id="ckOpen">COOKIE SETTINGS</button></span>' +
+    '</div>' +
+    '<div class="fr f-legal">' +
+      '<span>© 2026 SELENE. ALL RIGHTS RESERVED.</span>' +
+      '<span class="fr-r"><a href="#">LEGAL NOTICE</a> &nbsp;·&nbsp; <a href="#">PRIVACY POLICY</a> &nbsp;·&nbsp; INDIA | EN</span>' +
+    '</div>' +
   '</footer>';
 }
 
 function chromeHTML() {
   const searchSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>';
-  return '<a class="g-logo" href="index.html">Selene</a>' +
+  return '<a class="g-logo" href="index.html">SELENE</a>' +
     '<div class="g-hover" id="hoverStrip"></div>' +
     '<aside class="g-rail" id="rail">' + railHTML() + '</aside>' +
-    '<button class="g-bag" id="bagBtn" type="button">Bag (<span id="bagCount">0</span>)</button>' +
-    '<header class="g-mhead"><a class="m-logo" href="index.html">Selene</a>' +
-      '<div class="m-tools"><button type="button" id="mSearch" aria-label="Search">' + searchSVG + '</button>' +
-      '<button type="button" class="g-ham" id="burger" aria-label="Menu"><span></span><span></span></button></div></header>' +
+    '<button class="g-bag" id="bagBtn" type="button">SHOPPING BAG (<span id="bagCount">0</span>)</button>' +
+    '<header class="g-mhead">' +
+      '<div class="m-left"><button type="button" class="g-ham" id="burger" aria-label="Menu"><span></span><span></span></button></div>' +
+      '<a class="m-logo" href="index.html">SELENE</a>' +
+      '<div class="m-tools">' +
+        '<button type="button" id="mSearch" aria-label="Search">' + searchSVG + '</button>' +
+        '<button type="button" class="m-bag-link" id="mBagBtn" aria-label="Shopping bag">BAG (<span id="mBagN">0</span>)</button>' +
+      '</div>' +
+    '</header>' +
     mmHTML() +
     footerHTML() +
     '<div class="scrim" id="scrim"></div>' +
     '<aside class="s-search" id="searchPanel" aria-label="Search">' +
-      '<div class="s-top"><span>Search</span><button class="x" id="searchClose" aria-label="Close"></button></div>' +
-      '<form class="s-form" id="searchForm"><input id="searchInput" placeholder="What are you looking for" autocomplete="off" aria-label="Search products"><button type="submit">See the results</button></form>' +
-      '<div class="s-sug" id="searchSugs"><div class="lbl">Suggestions</div><ul>' +
+      '<div class="s-top"><span>SEARCH</span><button class="x" id="searchClose" aria-label="Close"></button></div>' +
+      '<form class="s-form" id="searchForm"><input id="searchInput" placeholder="SEARCH THE COLLECTION" autocomplete="off" aria-label="Search products"><button type="submit">SEE RESULTS</button></form>' +
+      '<div class="s-sug" id="searchSugs"><div class="lbl">SUGGESTIONS</div><ul>' +
         SUGS.map(s => '<li><button type="button" class="link-btn" data-sug="' + s + '">' + s + '</button></li>').join('') +
       '</ul></div>' +
       '<div class="s-res" id="searchResults"></div>' +
     '</aside>' +
     '<aside class="s-drawer" id="drawer" aria-label="Shopping bag">' +
-      '<div class="d-head"><h3>Bag <span id="drawerCount"></span></h3><button class="x" id="drawerClose" aria-label="Close"></button></div>' +
+      '<div class="d-head"><h3>SHOPPING BAG <span id="drawerCount"></span></h3><button class="x" id="drawerClose" aria-label="Close"></button></div>' +
       '<div class="d-body" id="drawerBody"></div>' +
       '<div class="d-foot" id="drawerFoot"></div>' +
     '</aside>' +
@@ -188,21 +208,21 @@ function chromeHTML() {
       '<div class="q-card"><button class="x q-x" id="quickClose" aria-label="Close"></button>' +
         '<div class="q-grid"><img id="quickImg" src="" alt="">' +
         '<div class="q-info"><p class="q-cat" id="quickCat"></p><h3 id="quickName"></h3><p class="q-price" id="quickPrice"></p>' +
-        '<p class="q-lab">Color — <b id="quickColor"></b></p><div class="q-sw" id="quickSw"></div>' +
-        '<p class="q-lab" id="quickSizeLab">Size</p><div class="q-sw sizes" id="quickSizes"></div>' +
+        '<p class="q-lab">COLOR — <b id="quickColor"></b></p><div class="q-sw" id="quickSw"></div>' +
+        '<p class="q-lab" id="quickSizeLab">SIZE</p><div class="q-sw sizes" id="quickSizes"></div>' +
         '<p class="q-hint" id="quickHint" hidden>Please make a selection.</p>' +
         '<div class="q-buy"><div class="qty" id="quickQty"><button data-step="-1" aria-label="Decrease">−</button><span id="quickQtyN">1</span><button data-step="1" aria-label="Increase">+</button></div>' +
-        '<button class="btn" id="quickAdd">Add to bag</button></div>' +
-        '<a class="link-btn" id="quickLink" href="#">View full details</a></div>' +
+        '<button class="btn" id="quickAdd">ADD TO SHOPPING BAG</button></div>' +
+        '<a class="link-btn" id="quickLink" href="#">VIEW FULL DETAILS</a></div>' +
         '</div></div></div>' +
     '<aside class="s-news" id="news" aria-label="Newsletter">' +
       '<button class="x" id="newsClose" aria-label="Close"></button>' +
-      '<h3>Join the list</h3><p>New collections, private restocks and invitations — straight to your inbox.</p>' +
-      '<form class="row" id="newsForm"><input type="email" placeholder="Email address" required aria-label="Email"><button type="submit">Subscribe</button></form>' +
+      '<h3>SUBSCRIBE TO THE NEWSLETTER</h3><p>Receive preview access to new collections, private salon invitations, and editorial updates.</p>' +
+      '<form class="row" id="newsForm"><input type="email" placeholder="EMAIL ADDRESS" required aria-label="Email"><button type="submit">SUBSCRIBE</button></form>' +
       '<p class="news-note" id="newsNote"></p>' +
     '</aside>' +
-    '<div class="s-cookie" id="cookie"><div class="txt"><b>Cookies</b> — we use cookies to improve your experience and measure our audience. <a class="link-btn" href="#">Privacy policy</a></div>' +
-      '<div class="btns"><button type="button" data-ck="all">Accept all</button><button type="button" class="ghost" data-ck="none">Reject all</button><button type="button" class="ghost" data-ck="set">Cookie settings</button></div></div>' +
+    '<div class="s-cookie" id="cookie"><div class="txt"><b>COOKIES</b> — We use cookies to enhance your browsing experience, serve personalized content, and analyze site traffic. <a class="link-btn" href="#">Privacy policy</a></div>' +
+      '<div class="btns"><button type="button" data-ck="all">ACCEPT ALL</button><button type="button" class="ghost" data-ck="none">REJECT ALL</button><button type="button" class="ghost" data-ck="set">COOKIE SETTINGS</button></div></div>' +
     '<div class="s-toast" id="toast"></div>';
 }
 
@@ -214,7 +234,7 @@ function renderDrawer() {
   const dc = $('#drawerCount');
   if (dc) dc.textContent = items.length ? '(' + Store.count() + ')' : '';
   if (!items.length) {
-    body.innerHTML = '<div class="d-empty">Your bag is empty.<br><br><a class="link-btn" href="shop.html">See the collection</a></div>';
+    body.innerHTML = '<div class="d-empty">YOUR SHOPPING BAG IS CURRENTLY EMPTY.<br><br><a class="link-btn" href="shop.html">DISCOVER THE COLLECTION</a></div>';
     foot.innerHTML = '';
     return;
   }
@@ -222,14 +242,15 @@ function renderDrawer() {
     '<div class="d-line" data-id="' + i.id + '" data-size="' + i.size + '">' +
       '<a class="d-limg" href="product.html?id=' + i.id + '"><img src="' + i.product.img + '" alt=""></a>' +
       '<div class="d-info"><a class="d-n" href="product.html?id=' + i.id + '">' + i.product.name + '</a>' +
-        (i.size ? '<span class="d-size">Size ' + i.size + '</span>' : '') +
+        (i.size ? '<span class="d-size">SIZE ' + i.size + '</span>' : '') +
         '<div class="qty"><button data-dq="-1" aria-label="Decrease">−</button><span>' + i.qty + '</span><button data-dq="1" aria-label="Increase">+</button></div>' +
       '</div>' +
-      '<div class="d-right"><span class="d-lp">' + money(i.line) + '</span><button class="d-rm" data-drm>Remove</button></div>' +
+      '<div class="d-right"><span class="d-lp">' + money(i.line) + '</span><button class="d-rm" data-drm>REMOVE</button></div>' +
     '</div>').join('');
   foot.innerHTML =
-    '<div class="d-sum"><span>Subtotal</span><strong>' + money(Store.subtotal()) + '</strong></div>' +
-    '<div class="d-actions"><a class="btn" href="cart.html">View bag</a><a class="btn btn-solid" href="checkout.html">Checkout</a></div>';
+    '<div class="d-sum"><span>SUBTOTAL</span><strong>' + money(Store.subtotal()) + '</strong></div>' +
+    '<p style="font-size:9px;color:var(--mut);letter-spacing:.3px;margin:6px 0 12px">COMPLIMENTARY EXPRESS SHIPPING</p>' +
+    '<div class="d-actions"><a class="btn" href="cart.html">VIEW SHOPPING BAG</a><a class="btn btn-solid" href="checkout.html">CONTINUE TO CHECKOUT</a></div>';
 }
 
 function anyPanelOpen() {
@@ -311,6 +332,7 @@ function updateBadges() {
   const n = Store.count();
   const bc = $('#bagCount'); if (bc) bc.textContent = n;
   const mn = $('#mmBagN'); if (mn) mn.textContent = n;
+  const mb = $('#mBagN'); if (mb) mb.textContent = n;
 }
 
 /* ================= NAV OVER VIDEO ================= */
@@ -341,6 +363,8 @@ function initPage() {
   $$('#gnav a[data-k], #mmenu a[data-k]').forEach(a => a.classList.toggle('on', keys.has(a.dataset.k)));
 
   $('#bagBtn').addEventListener('click', () => openDrawer(true));
+  const mbBtn = $('#mBagBtn');
+  if (mbBtn) mbBtn.addEventListener('click', () => openDrawer(true));
   $('#mmBag').addEventListener('click', () => { closeMenu(); openDrawer(true); });
   $('#drawerClose').addEventListener('click', () => openDrawer(false));
   $('#searchOpen').addEventListener('click', () => openSearch(true));

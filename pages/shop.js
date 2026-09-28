@@ -13,7 +13,7 @@ PAGES.shop = () => {
   };
   sort.value = state.sort;
 
-  const TITLE = { all: 'The collection', rings: 'Rings', necklaces: 'Necklaces', earrings: 'Earrings', bracelets: 'Bracelets' };
+  const TITLE = { all: 'THE COLLECTION', rings: 'RINGS', necklaces: 'NECKLACES & PENDANTS', earrings: 'EARRINGS', bracelets: 'BRACELETS' };
 
   function apply() {
     let list = PRODUCTS.filter(p => state.cat === 'all' || p.cat === state.cat);
@@ -37,7 +37,7 @@ PAGES.shop = () => {
     empty.hidden = list.length > 0;
     grid.hidden = list.length === 0;
 
-    title.textContent = state.q ? 'Results for “' + state.q + '”' : (TITLE[state.cat] || TITLE.all);
+    title.textContent = state.q ? 'RESULTS FOR “' + state.q.toUpperCase() + '”' : (TITLE[state.cat] || TITLE.all);
 
     $$('.filter', panel).forEach(b => b.classList.toggle('is-active', b.dataset.filter === state.cat));
     $$('#gnav a[data-k], #mmenu a[data-k]').forEach(a =>

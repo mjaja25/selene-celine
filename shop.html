@@ -13,47 +13,47 @@
 <main id="top" class="wrap">
 
   <div class="p-head">
-    <h1>Jewelry</h1>
+    <h1>JEWELLERY</h1>
     <div class="p-tools">
-      <label class="chk"><input type="checkbox" id="inStock"><span>In stock online</span></label>
-      <label class="sort-lab">Sort by
+      <label class="chk"><input type="checkbox" id="inStock"><span>IN STOCK ONLINE</span></label>
+      <label class="sort-lab">SORT BY
         <select id="shopSort">
-          <option value="featured">Featured</option>
-          <option value="low">Price — low to high</option>
-          <option value="high">Price — high to low</option>
-          <option value="rating">Top rated</option>
-          <option value="new">Newest first</option>
+          <option value="featured">FEATURED</option>
+          <option value="low">PRICE: LOW TO HIGH</option>
+          <option value="high">PRICE: HIGH TO LOW</option>
+          <option value="rating">TOP RATED</option>
+          <option value="new">NEW ARRIVALS</option>
         </select>
       </label>
-      <button type="button" class="p-btn" id="filtersBtn" aria-expanded="false">Filters</button>
+      <button type="button" class="p-btn" id="filtersBtn" aria-expanded="false">FILTERS</button>
     </div>
   </div>
 
   <div class="f-panel" id="fPanel">
     <div class="f-cats" id="filters">
-      <button type="button" class="filter is-active" data-filter="all">All</button>
-      <button type="button" class="filter" data-filter="rings">Rings</button>
-      <button type="button" class="filter" data-filter="necklaces">Necklaces</button>
-      <button type="button" class="filter" data-filter="earrings">Earrings</button>
-      <button type="button" class="filter" data-filter="bracelets">Bracelets</button>
+      <button type="button" class="filter is-active" data-filter="all">VIEW ALL</button>
+      <button type="button" class="filter" data-filter="earrings">EARRINGS</button>
+      <button type="button" class="filter" data-filter="necklaces">NECKLACES &amp; PENDANTS</button>
+      <button type="button" class="filter" data-filter="bracelets">BRACELETS</button>
+      <button type="button" class="filter" data-filter="rings">RINGS</button>
     </div>
     <div class="f-price">
-      <span>Max price</span>
+      <span>MAXIMUM PRICE</span>
       <input type="range" id="priceRange" min="799" max="1499" step="50" value="1499" aria-label="Maximum price">
       <output id="priceOut"></output>
-      <button type="button" class="link-btn" id="clearFilters">Clear all</button>
+      <button type="button" class="link-btn" id="clearFilters">RESET ALL</button>
     </div>
   </div>
 
-  <h2 class="p-title" id="plpTitle">The collection</h2>
+  <h2 class="p-title" id="plpTitle">THE COLLECTION</h2>
 
   <div class="grid plp-grid" id="shopGrid"></div>
 
   <div class="grid-empty" id="shopEmpty" hidden>
     <span class="empty-mark">✦</span>
-    <h3>Nothing matches those filters</h3>
-    <p>Try widening your price range or clearing the filters.</p>
-    <button class="btn btn-line" id="emptyReset">Reset filters</button>
+    <h3>NO PRODUCTS MATCH THOSE FILTERS</h3>
+    <p>Please adjust your price selection or reset filters to view all pieces.</p>
+    <button class="btn btn-line" id="emptyReset">RESET FILTERS</button>
   </div>
 
 </main>
