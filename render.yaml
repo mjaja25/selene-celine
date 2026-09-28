@@ -1,5 +1,6 @@
 ﻿services:
-  - type: static
+  - type: web
     name: selene-celine
+    runtime: static
     buildCommand: ""
-    publishPath: .
+    staticPublishPath: .
