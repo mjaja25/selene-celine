@@ -253,21 +253,21 @@ main{display:block}
 .tile:hover .tile-slide img{transform:scale(1.02)}
 
 .tile-bars, .tile-dots{
-  position:absolute;bottom:0;left:0;right:0;
-  display:flex;justify-content:center;align-items:center;
-  gap:3px;padding:0 12px 8px;z-index:2;pointer-events:none;
+  position:absolute;bottom:0;left:0;right:0;width:100%;
+  display:flex;align-items:flex-end;
+  gap:2px;padding:0;margin:0;z-index:2;pointer-events:none;
   transition:opacity .2s var(--tr);
 }
-.tile:hover .tile-bars, .tile:hover .tile-dots{opacity:0}
+.tile:hover .tile-bars, .tile:hover .tile-dots{opacity:1}
 .tile-bars .bar, .tile-dots .dot{
-  flex:1;max-width:26px;height:1.5px;
+  flex:1 1 0;min-width:0;max-width:none;height:3px;
   background:rgba(0,0,0,.18);
   box-shadow:0 0.5px 1px rgba(255,255,255,.85);
-  border-radius:1px;
+  border-radius:0;
   transition:background .2s ease;
 }
 .tile-bars .bar.on, .tile-dots .dot.on{
-  background:#000;height:1.5px;width:auto;border-radius:1px;
+  background:#000;height:3px;width:auto;border-radius:0;
 }
 
 .tile-arrow{
@@ -362,7 +362,7 @@ select{cursor:pointer}
 .pdp-gallery{display:flex;flex-direction:column;gap:10px;min-width:0}
 .pdp-gallery figure{aspect-ratio:4/5;overflow:hidden;background:#f2f2f2}
 .pdp-gallery img{width:100%;height:100%;object-fit:cover}
-.pdp-counter,.pdp-dots{display:none}
+.pdp-counter,.pdp-bars,.pdp-dots{display:none}
 .pdp-meta{position:sticky;top:0;align-self:start;min-width:0}
 .pdp-meta h1{padding-top:3px;font-size:10px;line-height:13px;letter-spacing:.3px;font-weight:400}
 .pdp-price{margin-top:10px;font-weight:700}
@@ -617,18 +617,19 @@ select{cursor:pointer}
     pointer-events:none;z-index:2;
   }
   .pdp-bars, .pdp-dots{
-    display:flex;position:absolute;bottom:12px;left:18px;right:18px;
-    justify-content:center;gap:4px;
+    display:flex;position:absolute;bottom:0;left:0;right:0;width:100%;
+    align-items:flex-end;gap:2px;
+    padding:0;margin:0;
     pointer-events:none;z-index:2;
   }
   .pdp-bars .bar, .pdp-dots .dot{
-    flex:1;max-width:32px;height:2px;
+    flex:1 1 0;min-width:0;max-width:none;height:3px;
     background:rgba(0,0,0,.18);box-shadow:0 0.5px 1px rgba(255,255,255,.85);
-    border-radius:1px;
+    border-radius:0;
     transition:background .2s ease;
   }
   .pdp-bars .bar.on, .pdp-dots .dot.on{
-    background:#000;height:2px;width:auto;
+    background:#000;height:3px;width:auto;border-radius:0;
   }
   .pdp-meta{position:static}
   .checkout-grid{grid-template-columns:1fr;gap:30px}
