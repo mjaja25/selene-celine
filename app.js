@@ -174,21 +174,30 @@ function footerHTML() {
 }
 
 function chromeHTML() {
-  const searchSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>';
-  return '<a class="g-logo" href="index.html">SELENE</a>' +
-    '<div class="g-hover" id="hoverStrip"></div>' +
-    '<aside class="g-rail" id="rail">' + railHTML() + '</aside>' +
-    '<button class="g-bag" id="bagBtn" type="button">SHOPPING BAG (<span id="bagCount">0</span>)</button>' +
-    '<header class="g-mhead">' +
-      '<div class="m-left"><button type="button" class="g-ham" id="burger" aria-label="Menu"><span></span><span></span></button></div>' +
-      '<a class="m-logo" href="index.html">SELENE</a>' +
-      '<div class="m-tools">' +
-        '<button type="button" id="mSearch" aria-label="Search">' + searchSVG + '</button>' +
-        '<button type="button" class="m-bag-link" id="mBagBtn" aria-label="Shopping bag">BAG (<span id="mBagN">0</span>)</button>' +
-      '</div>' +
-    '</header>' +
-    mmHTML() +
-    footerHTML() +
+  const searchSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>';
+  return '<header class="g-header g-mhead" id="gHeader">' +
+    '<div class="h-left">' +
+      '<button type="button" class="h-menu-btn" id="burger" aria-label="Open menu">' +
+        '<span class="h-ham" aria-hidden="true"><span></span><span></span></span>' +
+        '<span class="h-menu-text">MENU</span>' +
+      '</button>' +
+    '</div>' +
+    '<div class="h-center">' +
+      '<a class="h-logo m-logo" href="index.html" aria-label="SELENE — Home">SELENE</a>' +
+    '</div>' +
+    '<div class="h-right">' +
+      '<button type="button" class="h-tool-btn h-search-btn" id="mSearch" aria-label="Search">' +
+        '<span class="h-search-text">SEARCH</span>' +
+        searchSVG +
+      '</button>' +
+      '<button type="button" class="h-tool-btn h-bag-btn m-bag-link" id="bagBtn" aria-label="Shopping bag">' +
+        '<span class="h-bag-text">SHOPPING BAG (<span id="bagCount">0</span>)</span>' +
+        '<span class="h-bag-text-m">BAG (<span id="mBagN">0</span>)</span>' +
+      '</button>' +
+    '</div>' +
+  '</header>' +
+  mmHTML() +
+  footerHTML() +
     '<div class="scrim" id="scrim"></div>' +
     '<aside class="s-search" id="searchPanel" aria-label="Search">' +
       '<div class="s-top"><span>SEARCH</span><button class="x" id="searchClose" aria-label="Close"></button></div>' +
@@ -362,24 +371,37 @@ function initPage() {
   const keys = activeKeys();
   $$('#gnav a[data-k], #mmenu a[data-k]').forEach(a => a.classList.toggle('on', keys.has(a.dataset.k)));
 
-  $('#bagBtn').addEventListener('click', () => openDrawer(true));
-  const mbBtn = $('#mBagBtn');
-  if (mbBtn) mbBtn.addEventListener('click', () => openDrawer(true));
-  $('#mmBag').addEventListener('click', () => { closeMenu(); openDrawer(true); });
-  $('#drawerClose').addEventListener('click', () => openDrawer(false));
-  $('#searchOpen').addEventListener('click', () => openSearch(true));
-  $('#mSearch').addEventListener('click', () => openSearch(true));
-  $('#mmSearch').addEventListener('click', () => { closeMenu(); openSearch(true); });
-  $('#searchClose').addEventListener('click', () => openSearch(false));
-  $('#quickClose').addEventListener('click', closeQuick);
-  $('#qScrim').addEventListener('click', closeQuick);
-  $('#newsClose').addEventListener('click', () => { closeNews(); syncOverlay(); });
-  $('#scrim').addEventListener('click', () => { openDrawer(false); openSearch(false); closeQuick(); closeNews(); });
+  const bg = $('#burger');
+  if (bg) bg.addEventListener('click', () => {
+    $('#mmenu').classList.add('open');
+    const sc = $('#scrim'); if (sc) sc.classList.add('on');
+    document.body.classList.add('is-lock');
+  });
+  const mmc = $('#mmClose'); if (mmc) mmc.addEventListener('click', closeMenu);
+  const mm = $('#mmenu');
+  if (mm) {
+    mm.addEventListener('click', e => { if (e.target.closest('a')) closeMenu(); });
+    $$('#mmenu [data-mm]').forEach(b => b.addEventListener('click', () => b.parentElement.classList.toggle('open')));
+  }
 
-  $('#burger').addEventListener('click', () => { $('#mmenu').classList.add('open'); document.body.classList.add('is-lock'); });
-  $('#mmClose').addEventListener('click', closeMenu);
-  $('#mmenu').addEventListener('click', e => { if (e.target.closest('a')) closeMenu(); });
-  $$('#mmenu [data-mm]').forEach(b => b.addEventListener('click', () => b.parentElement.classList.toggle('open')));
+  const bb = $('#bagBtn'); if (bb) bb.addEventListener('click', () => openDrawer(true));
+  const mbBtn = $('#mBagBtn'); if (mbBtn) mbBtn.addEventListener('click', () => openDrawer(true));
+  const mmBag = $('#mmBag'); if (mmBag) mmBag.addEventListener('click', () => { closeMenu(); openDrawer(true); });
+  const dc = $('#drawerClose'); if (dc) dc.addEventListener('click', () => openDrawer(false));
+  const so = $('#searchOpen'); if (so) so.addEventListener('click', () => openSearch(true));
+  const ms = $('#mSearch'); if (ms) ms.addEventListener('click', () => openSearch(true));
+  const mms = $('#mmSearch'); if (mms) mms.addEventListener('click', () => { closeMenu(); openSearch(true); });
+  const sc = $('#searchClose'); if (sc) sc.addEventListener('click', () => openSearch(false));
+  const qc = $('#quickClose'); if (qc) qc.addEventListener('click', closeQuick);
+  const qs = $('#qScrim'); if (qs) qs.addEventListener('click', closeQuick);
+  const nc = $('#newsClose'); if (nc) nc.addEventListener('click', () => { closeNews(); syncOverlay(); });
+  const scr = $('#scrim'); if (scr) scr.addEventListener('click', () => { openDrawer(false); openSearch(false); closeQuick(); closeNews(); closeMenu(); });
+
+  const onHeaderScroll = () => {
+    document.body.classList.toggle('scrolled', window.scrollY > 30);
+  };
+  window.addEventListener('scroll', onHeaderScroll, { passive: true });
+  onHeaderScroll();
 
   addEventListener('keydown', e => {
     if (e.key === 'Escape') { openDrawer(false); openSearch(false); closeQuick(); closeNews(); closeMenu(); }
@@ -503,6 +525,8 @@ function initPage() {
 function closeMenu() {
   const m = $('#mmenu');
   if (m) m.classList.remove('open');
+  const scr = $('#scrim');
+  if (scr) scr.classList.remove('on');
   if (!anyPanelOpen()) document.body.classList.remove('is-lock');
 }
 

@@ -16,9 +16,8 @@ h1,h2,h3,h4,h5,h6{font-weight:700;letter-spacing:.5px;font-size:inherit;line-hei
 i,em{font-style:normal}
 
 :root{
-  --pl:260px;
-  --pr:27px;
-  --rail:250px;
+  --pl:36px;
+  --pr:36px;
   --line:#000;
   --hair:#c9c9c9;
   --hair2:#e4e4e4;
@@ -34,6 +33,7 @@ body{
   color:#000;background:#fff;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
   overflow-x:hidden;
+  padding-top:var(--headH);
 }
 body.is-lock{overflow:hidden}
 
@@ -47,103 +47,122 @@ input,textarea,select{text-transform:none}
 .wrap{padding-left:var(--pl);padding-right:var(--pr)}
 .u-hide{display:none !important}
 
-/* ================= LEFT RAIL ================= */
-.g-logo{
-  position:fixed;top:22px;left:27px;z-index:12;
+/* ================= CELINE HEADER ================= */
+.g-header, .g-mhead{
+  position:fixed;top:0;left:0;right:0;width:100%;height:var(--headH);
+  background:#fff;z-index:35;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--pr) 0 var(--pl);
+  border-bottom:1px solid rgba(0,0,0,.08);
+  transition:background .25s ease,border-color .25s ease;
+}
+
+/* Left: MENU button with Celine signature 2-bar icon */
+.h-left{
+  display:flex;align-items:center;justify-content:flex-start;
+  flex:1 1 0;min-width:0;
+}
+.h-menu-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  height:40px;padding:0;background:none;border:none;
+  cursor:pointer;color:#000;
+  transition:opacity .2s ease;
+}
+.h-menu-btn:hover{opacity:.55}
+.h-ham{
+  position:relative;width:19px;height:8px;
+  display:inline-flex;flex-direction:column;justify-content:space-between;
+  flex:none;
+}
+.h-ham span{
+  display:block;width:100%;height:1px;background:#000;
+  transition:transform .3s var(--tr),opacity .2s;
+}
+.h-menu-text{
+  font-family:inherit;font-size:11px;line-height:1;letter-spacing:1.5px;
+  font-weight:500;text-transform:uppercase;color:#000;
+}
+
+/* Center: Celine centered logo */
+.h-center{
+  position:absolute;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:auto;
+}
+.h-logo, .m-logo{
   display:block;
   font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-size:43px;line-height:33px;font-weight:400;letter-spacing:0;
-  text-transform:uppercase;color:#000;
-  transition:opacity .3s var(--tr);
+  font-size:27px;line-height:1;font-weight:500;letter-spacing:2.2px;
+  text-transform:uppercase;color:#000;text-decoration:none;
+  transition:opacity .25s ease;
 }
-.g-logo:hover{opacity:.6}
+.h-logo:hover, .m-logo:hover{opacity:.6}
 
-.g-rail{
-  position:fixed;top:0;left:0;width:var(--rail);height:100%;
-  background:#fff;z-index:7;
-  padding:88px 27px 40px;
-  overflow-y:auto;overflow-x:hidden;
-  transition:opacity .35s var(--tr) .25s,visibility 0s .601s;
-  scrollbar-width:none;
+/* Right: SEARCH & SHOPPING BAG */
+.h-right{
+  display:flex;align-items:center;justify-content:flex-end;
+  gap:26px;flex:1 1 0;min-width:0;
 }
-.g-rail::-webkit-scrollbar{display:none}
-body:not(.p-home) .g-rail{padding-top:138px}
-body.nav-over-video .g-rail{opacity:0;visibility:hidden;pointer-events:none}
-.g-hover{display:none}
-body.nav-over-video .g-hover{
-  display:block;position:fixed;top:0;left:0;width:var(--rail);height:100vh;z-index:9;
+.h-tool-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  height:40px;padding:0;background:none;border:none;
+  cursor:pointer;color:#000;
+  font-family:inherit;font-size:11px;line-height:1;
+  letter-spacing:1.2px;font-weight:500;text-transform:uppercase;
+  transition:opacity .2s ease;
 }
+.h-tool-btn:hover{opacity:.55}
+.h-tool-btn svg{width:13px;height:13px;stroke-width:1.7;flex:none}
+.h-bag-text-m{display:none}
 
-.g-nav{font-size:10px;line-height:13px}
-.g-nav a{display:block;height:13px;line-height:13px;transition:opacity .2s}
-.g-nav a:hover{opacity:.5}
-.g-nav .lv1{padding-left:10px}
-.g-nav .lv2{padding-left:20px}
-.g-nav li.grp{margin-top:13px}
-.g-nav li.grp:first-child{margin-top:0}
-.g-nav .on{font-weight:700}
-.g-nav .search-row{margin-top:13px}
-.g-nav .search-row button{display:flex;align-items:center;gap:7px;height:13px;line-height:13px}
-.g-nav .search-row svg{width:11px;height:11px;flex:none}
+/* Backward compatibility aliases */
+.g-logo, .g-rail, .g-hover{display:none !important}
+.g-bag{display:none}
 
-.g-bag{
-  position:fixed;top:30px;right:27px;z-index:13;
-  display:flex;align-items:center;gap:6px;
-  font-size:10px;line-height:13px;letter-spacing:.3px;text-transform:uppercase;
-  transition:opacity .2s;
-}
-.g-bag:hover{opacity:.55}
-
-/* ================= MOBILE HEADER ================= */
-/* ================= MOBILE HEADER (CELINE LAYOUT) ================= */
-.g-mhead{
-  display:none;position:fixed;top:0;left:0;right:0;height:var(--headH);
-  background:#fff;z-index:14;align-items:center;justify-content:space-between;
-  padding:0 18px;border-bottom:1px solid var(--hair2);
-}
-.g-mhead .m-left{display:flex;align-items:center;width:75px}
-.m-logo{
-  position:absolute;left:50%;transform:translateX(-50%);
-  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-size:25px;line-height:20px;font-weight:400;letter-spacing:1px;text-transform:uppercase;
-  color:#000;text-align:center;
-}
-.g-mhead .m-tools{display:flex;align-items:center;justify-content:flex-end;gap:12px;min-width:75px}
-.g-mhead .m-bag-link{
-  font-size:10px;line-height:13px;letter-spacing:.4px;text-transform:uppercase;font-weight:500;
-  display:flex;align-items:center;cursor:pointer;
-}
-.g-mhead button{display:flex;align-items:center;justify-content:center;height:32px}
-.g-mhead svg{width:18px;height:18px}
-.g-ham{position:relative;width:24px;height:24px;padding:0}
-.g-ham span{position:absolute;left:0;width:20px;height:1px;background:#000;transition:transform .3s var(--tr),opacity .2s}
-.g-ham span:nth-child(1){top:8px}
-.g-ham span:nth-child(2){top:15px}
-
-/* ================= MOBILE MENU ================= */
+/* ================= CELINE MENU DRAWER (DESKTOP & MOBILE) ================= */
 .g-mmenu{
-  position:fixed;inset:0;background:#fff;z-index:40;
-  display:none;flex-direction:column;
-  opacity:0;transition:opacity .3s var(--tr);
+  position:fixed;top:0;left:0;bottom:0;
+  width:420px;max-width:100vw;
+  background:#fff;z-index:60;
+  display:flex;flex-direction:column;
+  transform:translateX(-100%);
+  transition:transform .35s var(--tr);
+  box-shadow:none;
 }
-.g-mmenu.open{display:flex;opacity:1}
-.mm-head{display:flex;align-items:center;justify-content:space-between;height:var(--headH);padding:0 20px;flex:none}
-.mm-x{width:24px;height:24px;position:relative}
-.mm-x::before,.mm-x::after{content:"";position:absolute;top:11px;left:0;width:24px;height:2px;background:#000}
+.g-mmenu.open{
+  transform:translateX(0);
+  box-shadow:20px 0 60px rgba(0,0,0,.15);
+}
+.mm-head{
+  display:flex;align-items:center;justify-content:space-between;
+  height:var(--headH);padding:0 var(--pr) 0 var(--pl);flex:none;
+  border-bottom:1px solid var(--hair2);
+}
+.mm-x{width:24px;height:24px;position:relative;background:none;border:none;cursor:pointer}
+.mm-x::before,.mm-x::after{content:"";position:absolute;top:11px;left:2px;width:20px;height:1px;background:#000}
 .mm-x::before{transform:rotate(45deg)}
 .mm-x::after{transform:rotate(-45deg)}
-.mm-list{padding:8px 20px 0;overflow-y:auto;flex:1 1 auto}
-.mm-row{display:flex;align-items:center;justify-content:space-between;width:100%;padding:6.5px 0;font-size:10px;line-height:13px;letter-spacing:.3px}
-.mm-row i{font-size:13px;line-height:13px;transition:transform .3s var(--tr)}
+.mm-list{padding:16px var(--pl) 0;overflow-y:auto;flex:1 1 auto}
+.mm-row{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;padding:8px 0;font-size:11px;line-height:14px;letter-spacing:1px;
+  text-transform:uppercase;font-weight:500;background:none;border:none;cursor:pointer;color:#000;
+}
+.mm-row:hover{opacity:.6}
+.mm-row i{font-size:14px;line-height:14px;font-style:normal;transition:transform .3s var(--tr)}
 .mm-item.open .mm-row i{transform:rotate(45deg)}
-.mm-sub{display:none;padding:2px 0 8px 14px}
+.mm-sub{display:none;padding:4px 0 12px 14px}
 .mm-item.open .mm-sub{display:block}
-.mm-sub a{display:block;padding:5px 0;font-size:10px;line-height:13px;letter-spacing:.3px;opacity:.65}
+.mm-sub a{
+  display:block;padding:6px 0;font-size:10px;line-height:14px;
+  letter-spacing:.8px;opacity:.7;text-transform:uppercase;color:#000;
+}
+.mm-sub a:hover{opacity:1}
 .mm-sub a.lv2{padding-left:14px}
-.mm-grp{margin-top:13px}
-.mm-bottom{flex:none;padding:0 20px 20px}
-.mm-bottom a,.mm-bottom button{display:block;padding:6.5px 0;font-size:10px;line-height:13px}
-.mm-region{margin-top:42px;font-weight:700;font-size:10px;line-height:13px;text-transform:uppercase}
+.mm-bottom{flex:none;padding:16px var(--pl) 24px;border-top:1px solid var(--hair2)}
+.mm-bottom a,.mm-bottom button{display:block;padding:6px 0;font-size:10px;line-height:14px;letter-spacing:.8px;background:none;border:none;cursor:pointer;color:#000}
+.mm-bottom a:hover,.mm-bottom button:hover{opacity:.6}
+.mm-region{margin-top:20px;font-weight:700;font-size:10px;letter-spacing:1px;text-transform:uppercase}
 
 /* ================= MAIN ================= */
 main{display:block}
@@ -575,11 +594,7 @@ select{cursor:pointer}
 }
 @media (max-width:1023px){
   :root{--pl:20px;--pr:20px}
-  .g-rail,.g-logo,.g-bag,.g-hover{display:none !important}
-  .g-mhead{display:flex}
-  .wrap{padding-top:var(--headH)}
-  body.nav-over-video .g-rail{display:none}
-  .p-head{margin-top:26px;top:var(--headH);height:auto;flex-wrap:wrap;gap:10px;padding:8px 0}
+  .p-head{margin-top:16px;top:var(--headH);height:auto;flex-wrap:wrap;gap:10px;padding:8px 0}
   .p-title{font-size:16px;line-height:20px}
   .tile-arrow{display:none !important}
   .tile-bars, .tile-dots{opacity:1 !important}
@@ -645,6 +660,17 @@ select{cursor:pointer}
   .credits{padding-top:30px;padding-bottom:30px}
 }
 @media (max-width:767px){
+  :root{--headH:50px}
+  .h-menu-text{display:none}
+  .h-logo,.m-logo{font-size:22px;letter-spacing:1.5px}
+  .h-right{gap:14px}
+  .h-search-text{display:none}
+  .h-tool-btn svg{width:17px;height:17px;stroke-width:1.5}
+  .h-bag-text{display:none}
+  .h-bag-text-m{display:inline}
+  .g-mmenu{width:100vw}
+  .mm-list{padding:14px 20px 0}
+  .mm-bottom{padding:14px 20px 20px}
   .carousel-mobile{
     display:flex !important;overflow-x:auto;overflow-y:hidden;
     scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
